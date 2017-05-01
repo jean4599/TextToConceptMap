@@ -1,0 +1,17 @@
+.Error{
+  position: absolute;
+  width: 25%;
+  text-transform: uppercase;
+  bottom: 2%;
+  left: 5%;
+  background-color: #EA4034;
+  height: 40px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+}
+
+.Error p{
+  margin: 13px;
+}
