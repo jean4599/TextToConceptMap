@@ -60,15 +60,17 @@ class App extends Component {
       })
       
     })
-  } 
-  saveGraph(graphData){
-    for(var i=0; i< graphData.nodes.length; i++){
-      saveNode(graphData.nodes[i])
-    }
-    for(i=0; i< graphData.edges.length; i++){
-      saveLink(graphData.edges[i])
-    }
+    window.addEventListener("beforeunload", (ev) => 
+    {  
+        const conceptMapData = this.conceptmap.getNetworkData();
+        firebase.database().ref().push(conceptMapData)
+    });
   }
+  // componentWillUnmount(){
+  //   const conceptMapData = this.conceptmap.getNetworkData();
+  //   firebase.database().ref().push(JSON.stringify(conceptMapData))
+  //   firebase.database().ref().push({hi:'hi'})
+  // }
   getTimeStamp(){
     return this.refs.player.getPlayedTime();
   }

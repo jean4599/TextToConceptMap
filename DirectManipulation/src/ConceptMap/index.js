@@ -25,6 +25,7 @@ export default class ConceptMap extends Component {
 		this.endEditEdgeMode = this.endEditEdgeMode.bind(this);
 		this.deleteNode = this.deleteNode.bind(this);
 		this.deleteEdge = this.deleteEdge.bind(this);
+		this.getNetworkData = this.getNetworkData.bind(this);
 	}
 	componentDidMount(){
 		//shortcut 
@@ -81,6 +82,9 @@ export default class ConceptMap extends Component {
 	}
 	deleteEdge(){
 		this.network.deleteEdge(this.state.edgeData)
+	}
+	getNetworkData(){
+		return this.network.getNetworkData();
 	}
 	render(){
 		return (

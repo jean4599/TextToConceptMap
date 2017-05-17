@@ -28,7 +28,8 @@ export default class Network extends Component {
 	    this.addNode = this.addNode.bind(this);
 	    this.editNode = this.editNode.bind(this);
 	    this.editEdge = this.editEdge.bind(this);
-	    this.addEdgeMode = this.addEdgeMode.bind(this)
+	    this.addEdgeMode = this.addEdgeMode.bind(this);
+	    this.getNetworkData = this.getNetworkData.bind(this);
   	}
 	static propTypes = propTypes;
 	static defaultProps = defaultProps;
@@ -100,6 +101,12 @@ export default class Network extends Component {
 	}
 	addEdgeMode(){
 		this.network.addEdgeMode();
+	}
+	getNetworkData(){
+		return {
+			nodes: this.state.nodes.get(),
+			edges: this.state.edges.get()
+		}
 	}
   	componentDidMount() {
 	   const {
