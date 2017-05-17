@@ -56,8 +56,8 @@ export default class InputBox extends Component{
   		this.focusTextField();
   	}
   	shouldComponentUpdate(nextProps, nextState){
-  		//if(nextProps.mode !== this.props.mode || nextProps.nodeData !== this.props.nodeData || nextProps.edgeData !== this.props.edgeData)return true
-  		if(nextProps!=this.props) return true;
+  		if(nextProps.mode !== this.props.mode || nextProps.nodeData !== this.props.nodeData || nextProps.edgeData !== this.props.edgeData)return true
+  		//if(nextProps!=this.props) return true;
   			else return false
   	}
 	onKeyUp(e){
