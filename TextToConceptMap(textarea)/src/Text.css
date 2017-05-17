@@ -1,0 +1,5 @@
+textarea{
+	white-space: nowrap; /* will prevent the default wrapping of text to next line */
+	overflow-x: auto; /* will make horizontal scroll-bar appear only when needed */
+	border: 1px solid #AAAAAA;
+}

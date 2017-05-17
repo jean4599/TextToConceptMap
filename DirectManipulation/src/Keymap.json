@@ -1,0 +1,12 @@
+{
+ "ConceptMap": {
+   "ADD_EDGE": "shift",
+   "Action_2": ["Shortcut", "Shortcut"],
+   "Action_3": {
+     "osx": "Shortcut",
+     "windows": ["Shortcut", "Shortcut"],
+     "linux": "Shortcut",
+     "other": "Shortcut"
+   }
+ }
+}
