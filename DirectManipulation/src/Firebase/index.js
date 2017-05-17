@@ -15,6 +15,7 @@ export default firebase
 export const REF = {
   Node: '/conceptMap/nodes',
   Link: '/conceptMap/links',
+  Video: '/conceptMap/video',
 }
 
 export const saveNode = (node)=>{

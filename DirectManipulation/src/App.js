@@ -22,11 +22,14 @@ class App extends Component {
     super(props);
     this.getTimeStamp = this.getTimeStamp.bind(this);
     this.updateVideoTime = this.updateVideoTime.bind(this);
+    this.getVideo = this.getVideo.bind(this);
 
     this.handleDragStart = this.handleDragStart.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.jumpToVideoTime = this.jumpToVideoTime.bind(this);
+
+    this.getVideo();
   }
   state = {
     tree: {
@@ -38,12 +41,6 @@ class App extends Component {
     timeQueue:[],
     size: undefined,
     dragging: false,
-  }
-  static propTypes = {
-    videoURL: PropTypes.string,
-  }
-  static defaultProps={
-    videoURL: "https://www.youtube.com/watch?v=1LpHDOWMAdA",
   }
   componentDidMount() {
     firebase.database().ref(REF.Node).once('value').then((snapshot)=>{
@@ -60,17 +57,20 @@ class App extends Component {
       })
       
     })
+
+    //save the concept map before closeing the window
     window.addEventListener("beforeunload", (ev) => 
     {  
         const conceptMapData = this.conceptmap.getNetworkData();
         firebase.database().ref().push(conceptMapData)
     });
   }
-  // componentWillUnmount(){
-  //   const conceptMapData = this.conceptmap.getNetworkData();
-  //   firebase.database().ref().push(JSON.stringify(conceptMapData))
-  //   firebase.database().ref().push({hi:'hi'})
-  // }
+  getVideo(){
+    firebase.database().ref(REF.Video).once('value').then((snapshot)=>{
+      console.log('video: ',snapshot.val())
+      this.setState({videoURL: snapshot.val()})
+    })
+  }
   getTimeStamp(){
     return this.refs.player.getPlayedTime();
   }
@@ -129,7 +129,7 @@ class App extends Component {
         <SplitPane split="vertical" minSize='30%' maxSize='70%' defaultSize='53%'>
          
           <div className='container'>
-            <VideoPlayer className='video' courseURL={this.props.videoURL}  width={'100%'} height={'100%'} controls={true} ref='player'
+            <VideoPlayer className='video' courseURL={this.state.videoURL}  width={'100%'} height={'100%'} controls={true} ref='player'
             updateVideoTime={this.updateVideoTime}/>
           </div>
 

@@ -101,7 +101,7 @@ export default class VideoPlayer extends Component{
             className={this.props.className}
             width={this.props.width}
             height={this.props.height}
-            url={url}
+            url={this.props.courseURL}
             playing={playing}
             playbackRate={playbackRate}
             volume={volume}
