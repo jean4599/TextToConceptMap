@@ -53,7 +53,6 @@ export const defaultProps = {
 			  en: {
 			    edit: 'Edit',
 			    del: 'Delete selected',
-			    back: 'Back',
 			    addEdge: 'Add Link (shoutcut: "Shift")',
 			    editEdge: 'Edit Link',
 			    addNode: 'Add Concept',

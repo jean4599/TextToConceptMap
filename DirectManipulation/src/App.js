@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import SplitPane from 'react-split-pane';
+import Drawer from 'material-ui/Drawer';
+import FlatButton from 'material-ui/FlatButton';
+import HelpIcon from 'material-ui/svg-icons/action/help-outline';
 import './SplitPanel.css';
 import ConceptMap from './ConceptMap';
+import Help from './Help'
 import VideoPlayer from './Video/VideoPlayer'
 import {saveNode, saveLink, REF} from './Firebase';
 import firebase from 'firebase'  
@@ -98,10 +102,28 @@ class App extends Component {
           this.setState({ size: undefined });
       }
   }
+  handleToggle = () => this.setState({open: !this.state.open});
+
+  handleClose = () => this.setState({open: false});
   render() {
     // <RaisedButton className='save-btn' label="Save my concept map" primary={true} onClick={()=>this.saveGraph(this.state.tree)}/>
     return (
       <div className='container'>
+        <div>
+        <FlatButton
+              icon={<HelpIcon />}
+              style={{float:'right', minWidth:'36px'}}
+              onTouchTap={this.handleToggle}/>
+        <Drawer
+              docked={false}
+              width={500}
+              open={this.state.open}
+              openSecondary={true}
+              onRequestChange={(open) => this.setState({open})}
+            >
+            <Help />
+        </Drawer>
+        </div>
         <SplitPane split="vertical" minSize='30%' maxSize='70%' defaultSize='53%'>
          
           <div className='container'>
@@ -110,7 +132,7 @@ class App extends Component {
           </div>
 
           <div className='container'>
-            
+
             <ConceptMap className="output" graphData={this.state.tree} colors={this.state.colors}
             jumpToVideoTime={this.jumpToVideoTime}
             getTimeStamp={this.getTimeStamp}

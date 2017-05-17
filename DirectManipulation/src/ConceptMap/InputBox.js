@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {TextField} from 'material-ui'
+import {TextField, RaisedButton} from 'material-ui'
 
 const TEXT={
 	'add-node':{
@@ -20,6 +20,7 @@ export default class InputBox extends Component{
 		super(props);
 		this.onKeyUp = this.onKeyUp.bind(this);
 		//this.onChange = this.onChange.bind(this);
+		this.addNode = this.addNode.bind(this);
 		this.focusTextField = this.focusTextField.bind(this);
 		this.getNewPosition  = this.getNewPosition.bind(this);
 	}
@@ -55,7 +56,8 @@ export default class InputBox extends Component{
   		this.focusTextField();
   	}
   	shouldComponentUpdate(nextProps, nextState){
-  		if(nextProps.mode !== this.props.mode || nextProps.nodeData !== this.props.nodeData || nextProps.edgeData !== this.props.edgeData)return true
+  		//if(nextProps.mode !== this.props.mode || nextProps.nodeData !== this.props.nodeData || nextProps.edgeData !== this.props.edgeData)return true
+  		if(nextProps!=this.props) return true;
   			else return false
   	}
 	onKeyUp(e){
@@ -64,12 +66,7 @@ export default class InputBox extends Component{
 			var edge;
 			switch(this.props.mode){
 				case 'add-node': 
-					var p = this.getNewPosition();
-					node = {x: p.x, y: p.y}
-					node.label = this.textfield.getValue();
-					node.editable = true;
-					this.props.handleNewNode(node);
-					this.textfield.getInputNode().value = '';
+					this.addNode();
 					break;
 				case 'edit-node':
 					node = this.props.nodeData;
@@ -89,11 +86,14 @@ export default class InputBox extends Component{
 
 		} 
 	}
-	// onChange(e){
-	// 	this.setState({
-	// 		value: e.target.value,
-	// 	})
-	// }
+	addNode(){
+		var p = this.getNewPosition();
+		var node = {x: p.x, y: p.y}
+		node.label = this.textfield.getValue();
+		node.editable = true;
+		this.props.handleNewNode(node);
+		this.textfield.getInputNode().value = '';
+	}
 	focusTextField(){
 		//console.log('focus')
 		this.textfield.focus()
@@ -115,16 +115,37 @@ export default class InputBox extends Component{
 	}
 	render(){
 		return (
-			<TextField
-			  className='textField'
-			  style={this.props.style}
-		      hintText={TEXT[this.props.mode].hintText}
-		      floatingLabelText={TEXT[this.props.mode].floatingLabelText}
-		      onKeyUp={this.onKeyUp}
-		      floatingLabelFixed={true}
-		      onChange={this.onChange}
-		      ref={t=>{this.textfield = t}}
-		    />
+			<div style={this.props.style}>
+				<TextField
+					style={{
+			    		position: 'absolute',
+						bottom: '5px',
+						left: '5px',
+						height: '60px'
+					}}
+					hintStyle={{
+						bottom:'5px',
+					}}
+				  className='textField'
+			      hintText={TEXT[this.props.mode].hintText}
+			      floatingLabelText={TEXT[this.props.mode].floatingLabelText}
+			      disabled={this.props.disabled}
+			      onKeyUp={this.onKeyUp}
+			      floatingLabelFixed={true}
+			      onChange={this.onChange}
+			      ref={t=>{this.textfield = t}}/>
+			    <RaisedButton style={{
+			    		position: 'absolute',
+						bottom: '0px',
+						right: '10px',
+						display: (this.props.mode==='add-node')?'block':'none'
+						}}
+				  labelStyle={{textTransform:'none'}}
+			      label='Add concept'
+			      labelPosition="after"
+			      disabled={this.props.disabled}
+			      onClick={this.addNode}/>
+			</div>
 			)
 	}
 }

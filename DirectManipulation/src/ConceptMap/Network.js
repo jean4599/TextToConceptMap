@@ -40,9 +40,6 @@ export default class Network extends Component {
 	  	clicks:0,
 	  }
  	addEdge(edgeData, callback){
- 		this.setState({
- 			dragging: true,
- 		})
  		let edges = this.state.edges;
 		if (edgeData.from !== edgeData.to) {
 	        edges.add(edgeData);
@@ -160,8 +157,6 @@ export default class Network extends Component {
 		        if(params['nodes'].length > 0){ // If click the node, then edit mode
 		        	const nodeId = params['nodes'][0];
 		        	const node = this.nodes.get(nodeId)
-		        	console.log('network editNode: ')
-		        	console.log(node)
 			    	if(node){
 			    		this.props.prepareEditNode(node);
 			    	}
@@ -233,15 +228,17 @@ export default class Network extends Component {
 
 	    this.network.setData(this.data)
 	    if(nextProps.editingEdge){
-	    	
+	    	//console.log('open manipulation')
 	    	this.network.setOptions({
 	    		manipulation:{
 	    			enabled: true,
 	    			addEdge: this.addEdge,
+	    			addNode: false,
 	    		}
 	    	})	
 	    	this.network.addEdgeMode();
 	    }else{
+	    	//console.log('close manipulation')
 	    	this.network.setOptions({
 	    		manipulation:{
 	    			enabled: false,

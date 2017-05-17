@@ -9,7 +9,8 @@ var buttonLabel={}
 if(navigator.appVersion.indexOf("Win")!==-1){buttonLabel['add-edge']='Add link (ctrl+shif)'}
 else if(navigator.appVersion.indexOf("Mac")!==-1){buttonLabel['add-edge']='Add link (cmd+shif)'}
 buttonLabel['delete-edge']='Delete link';
-buttonLabel['delete-node']='Delete node';
+buttonLabel['delete-node']='Delete concept';
+buttonLabel['add-node']='Add concept'
 
 export default class ConceptMap extends Component {
 	constructor(props) {
@@ -35,8 +36,8 @@ export default class ConceptMap extends Component {
 	        }        
 		})
 		document.addEventListener('keyup', (e)=>{
-			if((navigator.appVersion.indexOf("Win")!==-1 && e.shiftKey && e.ctrlKey) ||
-	        	(navigator.appVersion.indexOf("Mac")!==-1 && e.shiftKey && e.metaKey)){
+			if((navigator.appVersion.indexOf("Win")!==-1 && (e.shiftKey || e.ctrlKey)) ||
+	        	(navigator.appVersion.indexOf("Mac")!==-1 && (e.shiftKey || e.metaKey))) {
 		        	console.log('shift press')
 		          	this.endEditEdgeMode();
 		        }
@@ -70,19 +71,15 @@ export default class ConceptMap extends Component {
 		this.network.editEdge(edge)
 	}
 	startEditEdgeMode(){
-		console.log('start adding edge mode!')
 		this.setState({editingEdge:true})
 	}
 	endEditEdgeMode(){
-		console.log('finish adding edge mode')
 		this.setState({editingEdge:false})
 	}
 	deleteNode(){
-		console.log('deleteNode')
 		this.network.deleteNode(this.state.nodeData)
 	}
 	deleteEdge(){
-		console.log('deleteEdge')
 		this.network.deleteEdge(this.state.edgeData)
 	}
 	render(){
@@ -101,9 +98,9 @@ export default class ConceptMap extends Component {
 	            		editingEdge={this.state.editingEdge}
 	            		endEditEdgeMode={this.endEditEdgeMode}/>
 	            </div>
-            	<div style={{width:'100%', height:'5%'}}>
-					<InputBox style={{	width:'200px',
-									height: '65px',
+            	<div style={{width:'100%', height:'6%'}}>
+					<InputBox style={{	width:'400px',
+									height:'36px',
 									position: 'absolute',
 									bottom: '10px',
 									left: '10px'}}
@@ -113,6 +110,7 @@ export default class ConceptMap extends Component {
 						handleNewNode={this.addNode}
 						handleEditNode={this.editNode}
 						handleEditEdge={this.editEdge}
+						disabled={this.state.editingEdge}
 						ref={input=>{this.inputBox = input}}/>
 					<RaisedButton style={{
 									position: 'absolute',
